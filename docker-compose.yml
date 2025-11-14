@@ -1,0 +1,37 @@
+services:
+  grabber:
+    container_name: spotify_grabber
+    build:
+      context: ./grabber
+      dockerfile: Dockerfile
+    environment:
+      - SP_CLIENT_ID=${SP_CLIENT_ID}
+      - SP_CLIENT_SECRET=${SP_CLIENT_SECRET}
+      - SP_PLAYLIST_ID=4FG7yA0yovJVxLwipyTn5F
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    working_dir: /app
+    command: ["/bin/sh", "-c", "while true; do python grab.py; sleep 60; done"]
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+      image: mysql:latest
+      container_name: mysql_container
+      restart: unless-stopped
+      environment:
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      #ports:
+      #  - "3306:3306"
+      volumes:
+        - ./mysql_data:/var/lib/mysql
+      healthcheck:
+        test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+        interval: 10s
+        timeout: 5s
+        retries: 5
