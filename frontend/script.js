@@ -18,11 +18,7 @@ function displayTracks(tracks) {
     const trackList = document.getElementById('track-list');
     trackList.innerHTML = '';
     
-    tracks.forEach(track => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `${track.title} by ${track.artist}`;
-        trackList.appendChild(listItem);
-    });
+    console.log(tracks);
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
