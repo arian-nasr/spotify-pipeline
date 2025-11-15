@@ -17,8 +17,12 @@ async function fetchTracks() {
 function displayTracks(tracks) {
     const trackList = document.getElementById('track-list');
     trackList.innerHTML = '';
-    
-    console.log(tracks);
+
+    tracks.tracks.forEach(track => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${track.track_name} by ${track.artist_names}`;
+        trackList.appendChild(listItem);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
