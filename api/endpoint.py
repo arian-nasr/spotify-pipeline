@@ -1,8 +1,10 @@
 import mysql.connector
 import os
 from flask import Flask
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins=["http://spotify-grabber-docker"])
 
 mysql_host = os.getenv('MYSQL_HOST', 'mysql')
 mysql_user = os.getenv('MYSQL_USER')
