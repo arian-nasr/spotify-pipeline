@@ -35,4 +35,4 @@ def tracks_endpoint():
     return {'tracks': tracks}, 200
 
 if __name__ == '__main__':
-    app.run(Debug=True)
+    app.run()
