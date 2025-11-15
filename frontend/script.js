@@ -40,8 +40,6 @@ function displayTracks(tracks) {
                 .catch(error => {
                     console.error('Error deleting track:', error);
                 });
-
-            displayTracks(tracks);
         });
         
         trackList.appendChild(listItem);
