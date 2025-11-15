@@ -33,14 +33,13 @@ function displayTracks(tracks) {
                 })
                 .then(data => {
                     console.log(data.message);
+                    fetchTracks().then(tracks => {
+                        displayTracks(tracks);
+                    });
                 })
                 .catch(error => {
                     console.error('Error deleting track:', error);
                 });
-
-            fetchTracks().then(tracks => {
-                displayTracks(tracks);
-            });
 
             displayTracks(tracks);
         });
