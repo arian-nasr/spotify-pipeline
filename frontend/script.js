@@ -1,4 +1,4 @@
-const apiUrl = 'http://spotify_api:5000/tracks';
+const apiUrl = 'http://spotify-grabber-docker:5000/tracks';
 
 async function fetchTracks() {
     try {
