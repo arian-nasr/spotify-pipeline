@@ -1,4 +1,4 @@
-const apiUrl = 'https://api:5000/tracks';
+const apiUrl = 'http://api:5000/tracks';
 
 async function fetchTracks() {
     try {
