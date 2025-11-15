@@ -35,3 +35,20 @@ services:
         interval: 10s
         timeout: 5s
         retries: 5
+        
+  api:
+    container_name: spotify_api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    working_dir: /app
+    ports:
+      - "5000:5000"
+    command: ["python", "endpoint.py"]
+    depends_on:
+      mysql:
+        condition: service_healthy
