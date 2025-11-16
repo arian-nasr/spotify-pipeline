@@ -7,4 +7,6 @@ RUN pip install -r requirements.txt
 
 COPY . /app
 
-CMD ["python", "grab.py"]
+EXPOSE 5000
+
+CMD ["python", "endpoint.py"]

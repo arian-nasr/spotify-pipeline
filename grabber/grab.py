@@ -55,6 +55,7 @@ def store_tracks_in_db(playlist_data):
         id INT AUTO_INCREMENT PRIMARY KEY,
         track_name VARCHAR(255),
         artist_names VARCHAR(255),
+        deleted BOOLEAN DEFAULT FALSE,
         UNIQUE KEY unique_track (track_name, artist_names)
     )
     '''
