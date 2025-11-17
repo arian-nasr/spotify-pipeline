@@ -18,15 +18,23 @@ function displayTracks(tracks) {
     const trackList = document.getElementById('track-list');
     trackList.innerHTML = '';
 
-    tracks.tracks.forEach((track, index) => {
+    (tracks.tracks || []).forEach((track, index) => {
         const listItem = document.createElement('li');
-        listItem.textContent = `${track.track_name} by ${track.artist_names}`;
-        
-        // Add click event to delete track
-        listItem.addEventListener('click', function() {
+
+        // Track text in a span (clicking this won't delete)
+        const textSpan = document.createElement('span');
+        textSpan.textContent = `${track.track_name} by ${track.artist_names}`;
+        listItem.appendChild(textSpan);
+
+        // Delete button beside the track
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.style.marginLeft = '10px';
+        deleteBtn.addEventListener('click', function(event) {
+            event.stopPropagation(); // ensure only button triggers deletion
             fetch(`${apiUrl}/tracks/delete/${encodeURIComponent(track.track_name)}/${encodeURIComponent(track.artist_names)}`)
                 .then(response => {
-                    if (!response.ok) { 
+                    if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     return response.json();
@@ -41,7 +49,8 @@ function displayTracks(tracks) {
                     console.error('Error deleting track:', error);
                 });
         });
-        
+
+        listItem.appendChild(deleteBtn);
         trackList.appendChild(listItem);
     });
 }
