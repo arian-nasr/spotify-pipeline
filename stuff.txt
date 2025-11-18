@@ -1,0 +1,28 @@
+CREATE TABLE user_activity (
+    ts TEXT NOT NULL, -- Assuming YYY-MM-DD 13:30:30 is stored as text
+    username TEXT,
+    platform TEXT,
+    ms_played INTEGER, -- Assuming milliseconds played is an integer
+    conn_country TEXT,
+    ip_addr_decrypted TEXT,
+    user_agent_decrypted TEXT,
+    master_metadata_track_name TEXT,
+    master_metadata_album_artist_name TEXT,
+    master_metadata_album_name TEXT,
+    spotify_track_uri TEXT,
+    episode_name TEXT,
+    episode_show_name TEXT,
+    spotify_episode_uri TEXT,
+    reason_start TEXT,
+    reason_end TEXT,
+    shuffle BOOLEAN, -- SQLite supports boolean as integer (0 or 1)
+    skipped BOOLEAN,
+    offline BOOLEAN,
+    offline_timestamp TEXT, -- Assuming date-time format similar to 'ts'
+    incognito_mode BOOLEAN
+);
+SELECT master_metadata_track_name, master_metadata_album_artist_name, COUNT(*) AS frequency
+FROM user_activity
+GROUP BY master_metadata_track_name, master_metadata_album_artist_name
+ORDER BY frequency DESC
+LIMIT 25;
